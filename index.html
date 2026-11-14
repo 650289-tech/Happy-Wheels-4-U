@@ -22,29 +22,19 @@
   </style>
 </head>
 <body>
-  <div id="player-container" style="padding: 20px;">Downloading Ruffle engine...</div>
-  <script src="https://unpkg.com" onerror="document.getElementById('player-container').innerText='Error: Ruffle CDN blocked or unreachable.'"></script>
+  <div id="player-container" style="padding: 20px;">Loading Game...</div>
+  <script src="./ruffle.js"></script>
   <script>
-    var attempts = 0;
-    var waitForRuffle = setInterval(function () {
-      attempts++;
-      if (window.RufflePlayer) {
-        clearInterval(waitForRuffle);
-        var container = document.getElementById("player-container");
-        container.innerText = "Ruffle loaded! Downloading game from Catbox...";
-        var ruffle = window.RufflePlayer.newest();
-        var player = ruffle.createPlayer();
-        container.innerHTML = "";
-        container.appendChild(player);
-        player.load("https://catbox.moe").catch(function (err) {
-          container.innerHTML = "<div style='padding:20px;'>Catbox Error: " + err + "</div>";
-        });
-      } else if (attempts > 100) {
-        clearInterval(waitForRuffle);
-        document.getElementById("player-container").innerText = "Timed out waiting for Ruffle to load.";
-      }
-    }, 100);
+    window.addEventListener("DOMContentLoaded", function () {
+      var container = document.getElementById("player-container");
+      var ruffle = window.RufflePlayer.newest();
+      var player = ruffle.createPlayer();
+      container.innerHTML = "";
+      container.appendChild(player);
+      player.load("https://catbox.moe").catch(function (err) {
+        container.innerHTML = "<div style='padding:20px;'>Catbox Error: " + err + "</div>";
+      });
+    });
   </script>
 </body>
 </html>
-

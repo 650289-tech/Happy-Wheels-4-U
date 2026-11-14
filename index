@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Classes</title>
+  <style>
+    html, body, #player-container {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000000;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    ruffle-player {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="player-container">Loading Game...</div>
+  <script src="https://jsdelivr.net"></script>
+  <script>
+    var waitForRuffle = setInterval(function () {
+      if (window.RufflePlayer) {
+        clearInterval(waitForRuffle);
+        var container = document.getElementById("player-container");
+        container.innerHTML = "";
+        var ruffle = window.RufflePlayer.newest();
+        var player = ruffle.createPlayer();
+        container.appendChild(player);
+        player.load("https://catbox.moe");
+      }
+    }, 100);
+  </script>
+</body>
+</html>
